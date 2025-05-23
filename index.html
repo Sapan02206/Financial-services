@@ -1,11 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Services</title>
-    <link rel="stylesheet" href="style.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- FontAwesome for icons -->
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #e5e5e5, #fff);
+            animation: backgroundAnimation 5s infinite alternate;
+            transition: background-color 0.5s ease;
+        }
+
+        header {
+            background-color: #ffa600;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            animation: fadeInHeader 2s ease-out;
+        }
+
+        header h1 {
+            font-size: 45px;
+            margin-bottom: 10px;
+            transform: scale(1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        header h1:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            animation: slideInNav 1s ease-out;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+            position: relative;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+        }
+
+        nav ul li:hover {
+            color: #ffa600;
+            transform: translateY(-5px);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #ffa600;
+            bottom: -5px;
+            left: 0;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        nav ul li:hover a::after {
+            transform: scaleX(1);
+        }
+
+        /* Headlines Section */
+        .headlines {
+            text-align: center;
+            background-color: #ffa600;
+            color: #fff;
+            padding: 15px;
+            animation: headlineMove 10s infinite linear;
+            font-size: 1.2em; /* Reduced size for headlines */
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Welcome Section */
+        .welcome {
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Loan Calculator Styles */
+        .loan-calculator {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .loan-calculator input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .loan-calculator button {
+            background-color: #ffa600;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+
+        .loan-calculator button:hover {
+            background-color: #e58f00;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            padding-top: 100px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4);
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 900px;
+            animation: modalContent 1s ease-out;
+        }
+
+        .modal-header {
+            font-size: 1.8em;
+            color: #ffa600;
+            margin-bottom: 20px;
+        }
+
+        .modal-body {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 30px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            right: 25px;
+            padding: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Service Styles */
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .service {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            flex-basis: 30%;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .service-icon {
+            font-size: 3em;
+            color: #ffa600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .service h2 {
+            color: #ffa600;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .service:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .services {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .service {
+                flex-basis: 80%;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        footer p {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Scroll Effects */
+        @keyframes modalContent {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(45deg, #e5e5e5, #fff); }
+            50% { background: linear-gradient(45deg, #fff, #e5e5e5); }
+            100% { background: linear-gradient(45deg, #e5e5e5, #fff); }
+        }
+
+        @keyframes headlineMove {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -20,7 +298,7 @@
             <li><a href="javascript:void(0)" onclick="showService('stock-trading')"><b>Stock Trading</b></a></li>
             <li><a href="javascript:void(0)" onclick="showService('mutual-funds')"><b>Mutual Fund Investment</b></a></li>
             <li><a href="javascript:void(0)" onclick="showService('insurance')"><b>Insurance Pension Products</b></a></li>
-            <li><a href="javascript:void(0)" onclick="showLoanCalculator()">Loan Calculation</a></li>
+            <li><a href="javascript:void(0)" onclick="showLoanCalculator()">Loan Calculation</a></li> <!-- New Loan Calculation Link -->
         </ul>
     </nav>
 
@@ -37,25 +315,31 @@
     <!-- Main Content -->
     <div class="container">
         <div class="services" id="services-container">
-            <!-- Stock Trading -->
+            <!-- Stock Trading Section -->
             <div class="service" id="stock-trading" style="display: none;" onclick="openModal('stock-trading-modal')">
-                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="service-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
                 <h2>Stock Trading</h2>
             </div>
 
-            <!-- Mutual Funds -->
+            <!-- Mutual Fund Investment Section -->
             <div class="service" id="mutual-funds" style="display: none;" onclick="openModal('mutual-funds-modal')">
-                <div class="service-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                <div class="service-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
                 <h2>Mutual Fund Investment</h2>
             </div>
 
-            <!-- Insurance -->
+            <!-- Insurance Pension Products Section -->
             <div class="service" id="insurance" style="display: none;" onclick="openModal('insurance-modal')">
-                <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="service-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
                 <h2>Insurance Pension Products</h2>
             </div>
 
-            <!-- Loan Calculator -->
+            <!-- Loan Calculation Section -->
             <div id="loan-calculator" class="loan-calculator">
                 <h2>Loan Calculator</h2>
                 <form>
@@ -66,38 +350,54 @@
                     <div id="loan-result"></div>
                 </form>
             </div>
+
         </div>
     </div>
 
-    <!-- Stock Modal -->
+    <!-- Modal for Stock Trading -->
     <div id="stock-trading-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('stock-trading-modal')">&times;</span>
-            <div class="modal-header"><b>Stock Trading</b></div>
+            <div class="modal-header">
+                <b>Stock Trading</b>
+            </div>
             <div class="modal-body">
-                <p>Stock trading is the act of buying and selling stocks in the stock market...</p>
+                <p>Stock trading is the act of buying and selling stocks in the stock market. It provides an opportunity for investors to profit by trading shares of companies...</p>
+                <p>Stock traders typically buy stocks at a low price and sell them at a higher price. The key to successful stock trading lies in understanding the market...</p>
+                <p>With stock trading, investors can diversify their portfolios and increase their wealth. However, it also involves risks, such as market volatility...</p>
+                <p>Overall, stock trading is an exciting and dynamic way to grow your investments, but it requires education, research, and discipline to succeed.</p>
             </div>
         </div>
     </div>
 
-    <!-- Mutual Funds Modal -->
+    <!-- Modal for Mutual Funds -->
     <div id="mutual-funds-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('mutual-funds-modal')">&times;</span>
-            <div class="modal-header"><b>Mutual Fund Investment</b></div>
+            <div class="modal-header">
+                <b>Mutual Fund Investment</b>
+            </div>
             <div class="modal-body">
-                <p>Mutual fund investment is one of the most popular ways to invest...</p>
+                <p>Mutual fund investment is one of the most popular ways to invest in a diversified portfolio. Mutual funds pool money from multiple investors to invest in stocks, bonds, or other securities...</p>
+                <p>By investing in mutual funds, individuals gain access to a diversified investment portfolio that would be difficult or expensive to build on their own...</p>
+                <p>Investing in mutual funds is managed by professional fund managers, who make decisions on behalf of investors. This makes mutual funds a good option for those who are new to investing...</p>
+                <p>Mutual funds are relatively low-risk investments, but their performance depends on the types of assets held by the fund. Overall, mutual funds offer a convenient and affordable way to invest in the market.</p>
             </div>
         </div>
     </div>
 
-    <!-- Insurance Modal -->
+    <!-- Modal for Insurance -->
     <div id="insurance-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('insurance-modal')">&times;</span>
-            <div class="modal-header"><b>Insurance Pension Products</b></div>
+            <div class="modal-header">
+                <b>Insurance Pension Products</b>
+            </div>
             <div class="modal-body">
-                <p>Insurance and pension products provide financial security...</p>
+                <p>Insurance and pension products provide financial security for individuals and their families. Insurance products help protect against the financial risks of events such as illness, accidents, or death...</p>
+                <p>Pension products, on the other hand, help individuals save for retirement. These products ensure a steady income during retirement years, which is essential for maintaining a comfortable lifestyle...</p>
+                <p>Both insurance and pension products can be tailored to suit the individual's needs. Choosing the right combination can offer peace of mind and financial stability...</p>
+                <p>While these products provide protection and savings, it is important to carefully assess the terms and conditions, and select the right coverage for your needs...</p>
             </div>
         </div>
     </div>
@@ -108,33 +408,52 @@
     </footer>
 
     <script>
+        // Open Modal
         function openModal(modalId) {
             document.getElementById(modalId).style.display = "block";
         }
+
+        // Close Modal
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = "none";
         }
+
+        // Show Home Page Content
         function showHomePage() {
             document.getElementById('stock-trading').style.display = 'block';
             document.getElementById('mutual-funds').style.display = 'block';
             document.getElementById('insurance').style.display = 'block';
             document.getElementById('loan-calculator').style.display = 'none';
         }
+
+        // Show Specific Service Section
         function showService(service) {
             document.getElementById('stock-trading').style.display = 'none';
             document.getElementById('mutual-funds').style.display = 'none';
             document.getElementById('insurance').style.display = 'none';
             document.getElementById('loan-calculator').style.display = 'none';
-            document.getElementById(service).style.display = 'block';
+
+            if(service === 'stock-trading') {
+                document.getElementById('stock-trading').style.display = 'block';
+            } else if(service === 'mutual-funds') {
+                document.getElementById('mutual-funds').style.display = 'block';
+            } else if(service === 'insurance') {
+                document.getElementById('insurance').style.display = 'block';
+            }
         }
+
+        // Show Loan Calculator Section
         function showLoanCalculator() {
             document.getElementById('loan-calculator').style.display = 'block';
         }
+
+        // Loan Calculation Logic
         function calculateLoan() {
             var amount = document.getElementById('loan-amount').value;
             var rate = document.getElementById('interest-rate').value;
             var term = document.getElementById('loan-term').value;
-            if (amount && rate && term) {
+            
+            if(amount && rate && term) {
                 var interest = (amount * rate * term) / 100;
                 var totalPayment = parseFloat(amount) + interest;
                 document.getElementById('loan-result').innerHTML = `
